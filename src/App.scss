@@ -1,14 +1,15 @@
+$default-fonts: 'Vollkorn',
+serif;
+
 html {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  font-family: "Vollkorn", serif;
+  box-sizing: border-box;
+  font-family: $default-fonts;
 }
 
 *,
 *:before,
 *:after {
-  -webkit-box-sizing: inherit;
-          box-sizing: inherit;
+  box-sizing: inherit;
   font-family: inherit;
 }
 
@@ -17,8 +18,6 @@ html {
 }
 
 .flex {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
 
@@ -37,4 +36,3 @@ html {
 .font-bold {
   font-weight: 700;
 }
-/*# sourceMappingURL=App.css.map */
