@@ -16,11 +16,13 @@ const useStyles = makeStyles(theme => ({
     textDecorationLine: "none",
     cursor: "pointer",
     position: "relative",
+    padding: theme.spacing(0, 1),
     "&:after": {
       content: "''",
       display: "block",
       position: "absolute",
       bottom: 0,
+      left: 0,
       width: "100%",
       height: "2px",
       backgroundColor: theme.palette.secondary.main,

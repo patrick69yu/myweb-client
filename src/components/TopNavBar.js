@@ -5,7 +5,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import NavLink from "./NavLink";
 
 import MenuIcon from "@material-ui/icons/Menu";
@@ -47,14 +46,6 @@ export default function TopNavBar() {
     <div className={classes.root}>
       <AppBar position='fixed'>
         <Toolbar>
-          <IconButton
-            edge='start'
-            className={classes.menuButton}
-            color='inherit'
-            aria-label='Click the button to open menu'
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography className={classes.title}>After Coffee</Typography>
           <IconButton
             edge='start'
