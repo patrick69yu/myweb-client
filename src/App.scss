@@ -1,38 +1,13 @@
-$default-fonts: 'Vollkorn',
-serif;
-
 html {
   box-sizing: border-box;
-  font-family: $default-fonts;
 }
 
 *,
 *:before,
 *:after {
   box-sizing: inherit;
-  font-family: inherit;
 }
 
-.text-center {
-  text-align: center;
-}
-
-.flex {
-  display: flex;
-}
-
-.block {
-  display: block;
-}
-
-.hide {
-  display: none;
-}
-
-.font-normal {
-  font-weight: 400;
-}
-
-.font-bold {
-  font-weight: 700;
+body {
+  margin: 0;
 }
