@@ -11,6 +11,7 @@ import TopNavBar from "./components/TopNavBar";
 import Home from "./components/Route/Home";
 import Aboutme from "./components/Route/Aboutme";
 import Whoisthis from "./components/Route/Whoisthis";
+import PageNotFound from "./components/Route/PageNotFound";
 
 // Import weather icons
 import "./dist/wu-icons-style.css";
@@ -54,6 +55,9 @@ export default function App() {
             </Route>
             <Route path='/whoisthis'>
               <Whoisthis />
+            </Route>
+            <Route path='*'>
+              <PageNotFound />
             </Route>
           </Switch>
         </main>
