@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
       bottom: 0,
       left: 0,
       width: "100%",
-      height: "2px",
+      height: "3px",
       backgroundColor: theme.palette.secondary.main,
       transition: "all 0.3s ease",
       borderRadius: theme.spacing(1),
@@ -58,3 +59,9 @@ export default function NavLink(props) {
     </ListItem>
   );
 }
+
+NavLink.propTypes = {
+  to: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  pathname: PropTypes.string.isRequired
+};

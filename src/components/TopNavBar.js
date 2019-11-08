@@ -17,7 +17,6 @@ const useStyles = makeStyles(theme => ({
     height: "4rem"
   },
   menuButton: {
-    marginRight: theme.spacing(2),
     display: "none",
     [theme.breakpoints.down("sm")]: {
       display: "block"
