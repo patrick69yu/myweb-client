@@ -1,12 +1,16 @@
-import React, { Fragment } from "react";
-import Typography from "@material-ui/core/Typography";
+import React from "react";
+
+// Material-ui
+
+// Import components
+import HeadingH1 from "../HeadingH1";
 
 export default function Whoisthis() {
+  const h1Title = "Who Is This";
+
   return (
-    <Fragment>
-      <Typography className='text-center' color='primary' variant='h1'>
-        Who is this?
-      </Typography>
-    </Fragment>
+    <section>
+      <HeadingH1 title={h1Title} />
+    </section>
   );
 }

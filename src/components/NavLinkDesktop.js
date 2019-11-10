@@ -1,8 +1,10 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import ListItem from "@material-ui/core/ListItem";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { Link, useLocation } from "react-router-dom";
+
+// Material-ui
+import ListItem from "@material-ui/core/ListItem";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   listItem: {
@@ -11,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     whiteSpace: "nowrap"
   },
   linkText: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.primary.main,
     fontFamily: "Caveat, Roboto, Helvetica, Arial, sans-serif",
     fontSize: "1.5rem",
     textDecorationLine: "none",
@@ -44,9 +46,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function NavLink(props) {
+export default function NavLinkDesktop(props) {
   const classes = useStyles();
-  const { to, title, pathname } = props;
+  const { to, title } = props;
+  const location = useLocation();
+  const pathname = location.pathname;
 
   return (
     <ListItem className={classes.listItem}>
@@ -60,8 +64,7 @@ export default function NavLink(props) {
   );
 }
 
-NavLink.propTypes = {
+NavLinkDesktop.propTypes = {
   to: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  pathname: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired
 };

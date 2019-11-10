@@ -1,12 +1,16 @@
-import React, { Fragment } from "react";
-import Typography from "@material-ui/core/Typography";
+import React from "react";
+
+// Material-ui
+
+// Import components
+import HeadingH1 from "../HeadingH1";
 
 export default function Aboutme() {
+  const h1Title = "About Me";
+
   return (
-    <Fragment>
-      <Typography className='text-center' color='primary' variant='h1'>
-        About Me
-      </Typography>
-    </Fragment>
+    <section>
+      <HeadingH1 title={h1Title} />
+    </section>
   );
 }

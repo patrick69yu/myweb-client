@@ -1,10 +1,15 @@
 import React from "react";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { Switch, Route } from "react-router-dom";
+
+// Material-ui
+import {
+  createMuiTheme,
+  ThemeProvider,
+  makeStyles
+} from "@material-ui/core/styles";
 import { blue } from "@material-ui/core/colors";
-import { makeStyles } from "@material-ui/core/styles";
 
 // Import components
-import { Switch, Route } from "react-router-dom";
 import TopNavBar from "./components/TopNavBar";
 
 // Import Routes
@@ -19,22 +24,19 @@ import "./App.css";
 
 const customTheme = createMuiTheme({
   palette: {
-    primary: { main: blue[700] },
-    text: { secondary: "#FFF" }
+    primary: { main: blue[700] }
   },
   typography: {
-    fontFamily: "Caveat, Roboto, Helvetica, Arial, sans-serif",
-    h1: {
-      fontSize: "4rem",
-      textAlign: "center",
-      padding: "1rem"
-    }
+    fontFamily: "Caveat, Roboto, Helvetica, Arial, sans-serif"
   }
 });
 
 const useStyles = makeStyles(theme => ({
   mainSection: {
-    padding: theme.spacing(2, 0)
+    width: "100%",
+    height: "calc(100vh - 4rem)",
+    maxWidth: "100%",
+    maxHeight: "100%"
   }
 }));
 
