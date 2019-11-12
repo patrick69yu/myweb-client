@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   },
   linkText: {
     color: theme.palette.primary.main,
-    fontFamily: "Caveat, Roboto, Helvetica, Arial, sans-serif",
+    fontFamily: "Caveat, Helvetica, Arial, sans-serif",
     fontSize: "1.5rem",
     textDecorationLine: "none",
     cursor: "pointer",

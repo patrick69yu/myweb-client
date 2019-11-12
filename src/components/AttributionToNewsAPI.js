@@ -6,7 +6,7 @@ import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    fontFamily: "Caveat, Roboto, Helvetica, Arial, sans-serif",
+    fontFamily: "Caveat, Helvetica, Arial, sans-serif",
     fontSize: "1.2rem"
   },
   cta: {

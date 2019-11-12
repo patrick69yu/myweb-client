@@ -1,141 +1,178 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import axios from "axios";
 
 // Material-ui
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+
+// Import components
+import NewsCard from "../NewsCard";
 
 const useStyles = makeStyles(theme => ({
   root: {
     textAlign: "center",
-    margin: "0 25%",
-    padding: theme.spacing(4, 8),
+    padding: theme.spacing(4, 0, 8),
+    marginBottom: theme.spacing(8),
     [theme.breakpoints.only("sm")]: {
-      margin: "0 15%",
-      padding: theme.spacing(4, 6)
+      padding: theme.spacing(4, 6),
+      marginBottom: theme.spacing(6)
     },
     [theme.breakpoints.only("xs")]: {
-      margin: "0 5%",
-      padding: theme.spacing(2, 4)
+      padding: theme.spacing(2, 4),
+      marginBottom: theme.spacing(4)
     }
+  },
+  title: {
+    fontSize: "3.5rem",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "3rem"
+    }
+  },
+  container: {
+    maxWidth: "100%",
+    margin: theme.spacing(0, 0, 4)
+  },
+  loadMoreButton: {
+    padding: theme.spacing(1, 2),
+    fontSize: "1.1rem"
   }
 }));
 
-console.log("* My API KEY = " + process.env.REACT_APP_NEWSAPI_API_KEY);
-
 export default function NewsFeed() {
   const classes = useStyles();
-
-  const attributionToNewsAPI = () => {
-    return (
-      <p>
-        Powered by <Link>NewsAPI.org</Link>
-      </p>
-    );
+  const defaultSettings = {
+    q: ["nba"],
+    page: 1,
+    language: "en",
+    sortBy: "publishedAt",
+    qInTitle: false,
+    pageSize: 20,
+    from: "",
+    to: ""
   };
 
-  /**
-   * Declare state variable
-   * - @param: keyword, array, contains all keywords,
-   * - @param: page, number, use to page through the results, start from 1
-   * - @param: lang, string, indicates the preferred language, default: English
-   * - @param: sortBy, string, indicates sorting condition,
-   * - @param: appearInTitle, boolean, use q if false, or use qInTitle if true,
-   * - @param: maxResultsPerPage, number, default 20, can be 20/40/60/80/100,
-   * - @param: fromDate, string, publication starting date,
-   * - @param: toDate, string, publication ending date
-   * */
+  const [q, setQ] = useState(defaultSettings.q);
+  const [page, setPage] = useState(defaultSettings.page);
+  const [language, setLanguage] = useState(defaultSettings.language);
+  const [sortBy, setSortBy] = useState(defaultSettings.sortBy);
+  const [qInTitle, setQInTitle] = useState(defaultSettings.qInTitle);
+  const [pageSize, setPageSize] = useState(defaultSettings.pageSize);
+  const [fromDate, setFromDate] = useState(defaultSettings.from);
+  const [toDate, setToDate] = useState(defaultSettings.to);
 
-  const defaultLanguage = "en";
-  const defaultPageSize = 20;
-
-  const [requestParams, setPage] = useState({
-    keyword: null,
-    page: null,
-    lang: defaultLanguage,
-    sortBy: null,
-    appearInTitle: false,
-    pageSize: defaultPageSize,
-    fromDate: null,
-    toDate: null
-  });
-
-  function constructQueryParams() {
-    const {
-      keyword,
-      page,
-      lang,
-      sortBy,
-      appearInTitle,
-      pageSize,
-      fromDate,
-      toDate
-    } = requestParams;
-    const queryKeywords =
-      (appearInTitle ? "qInTitle=" : "q=") + keyword.join(" AND ");
-    const queryPage = page ? "page=" + page : null;
-    const queryLanguage = lang !== defaultLanguage ? "language=" + lang : null;
-    const querySortBy = sortBy ? "sortBy=" + sortBy : null;
-    const queryPageSize =
-      pageSize > defaultPageSize ? "pageSize=" + pageSize : null;
-    const queryFromDate = fromDate ? "from=" + fromDate : null;
-    const queryToDate = toDate ? "to=" + toDate : null;
-
-    return [
-      queryKeywords,
-      queryPage,
-      queryLanguage,
-      querySortBy,
-      queryPageSize,
-      queryFromDate,
-      queryToDate
-    ]
-      .filter(item => item !== null)
-      .join("&");
-  }
-
+  const [apiUrl, setApiUrl] = useState("");
+  // Build API url based on the query parameters
   useEffect(() => {
-    const apiUrl =
-      "https://newsapi.org/v2/everything?" + constructQueryParams();
+    const baseUrl = "https://newsapi.org/v2/everything?";
+    const defaultPage = 1;
+    const defaultPageSize = 20;
 
-    const fetchData = async () => {
-      const result = await axios.get(apiUrl);
-      const quote = result.data.contents.quotes[0].quote;
-      const author = result.data.contents.quotes[0].author;
-      const date = result.data.contents.quotes[0].date;
-      console.log("Newest date is => " + quote + author + date);
-      // Update the state object with fetched data
-      setQod({
-        quote: quote,
-        author: author,
-        date: date
+    if (q) {
+      const queryQ = (qInTitle ? "qInTitle=" : "q=") + q.join(" AND ");
+
+      const queryPage = page > defaultPage ? "page=" + page : null;
+
+      const queryLanguage = "language=" + language;
+
+      const querySortBy = "sortBy=" + sortBy;
+
+      const queryPageSize =
+        pageSize > defaultPageSize ? "pageSize=" + pageSize : null;
+
+      const queryFromDate = fromDate ? "from=" + fromDate : null;
+
+      const queryToDate = toDate ? "to=" + toDate : null;
+
+      setApiUrl(
+        baseUrl +
+          [
+            queryQ,
+            queryPage,
+            queryLanguage,
+            querySortBy,
+            queryPageSize,
+            queryFromDate,
+            queryToDate
+          ]
+            .filter(item => item !== null)
+            .join("&")
+      );
+    }
+  }, [q, page, language, sortBy, qInTitle, pageSize, fromDate, toDate]);
+
+  const initialArticles = [];
+  function reducerForArticles(articles, action) {
+    if (action.newArticles) {
+      return articles.concat(action.newArticles);
+    }
+    throw new Error();
+  }
+  const [articles, dispatch] = useReducer(reducerForArticles, initialArticles);
+
+  // The Effect of fetching news from API
+  useEffect(() => {
+    if (apiUrl) {
+      // If API URL at least has q parameter, fetch data from API
+      axios
+        .get(apiUrl, {
+          headers: {
+            Authorization: "Bearer " + process.env.REACT_APP_NEWSAPI_API_KEY
+          },
+          mode: "cors"
+        })
+        .then(response => {
+          // Handle success response
+          dispatch({ newArticles: response.data.articles });
+        })
+        .catch(error => {
+          // Handle error message
+          console.log("X => ", error);
+        });
+    } else {
+      // API must have q parameter. Alert user to enter a keyword
+    }
+  }, [apiUrl]);
+
+  // Based on fetched data, generate news cards
+  const BuildNewsCards = () => {
+    if (articles) {
+      let count = 0;
+
+      return articles.map(article => {
+        count += 1;
+        return (
+          <Grid item sm={12} md={6} lg={4} xl={3} key={count}>
+            <NewsCard
+              number={count}
+              title={article.title}
+              author={article.author}
+              date={article.publishedAt}
+              imgUrl={article.urlToImage}
+              description={article.description}
+              newsUrl={article.url}
+            />
+          </Grid>
+        );
       });
-    };
-  }, []);
+    }
+
+    return null;
+  };
 
   return (
-    <Paper className={classes.root}>
-      <div className={classes.svgQuoteUp}>
-        <FormatQuoteOutlinedIcon fontSize='large' color='secondary' />
-      </div>
-      <Typography component='h2' className={classes.title}>
-        Quote of the day
-      </Typography>
-      <Typography component='p' className={classes.date}>
-        {qod.date}
-      </Typography>
-      <Typography component='p' className={classes.quote}>
-        {qod.quote}
-      </Typography>
-      <Typography component='p' className={classes.author}>
-        {qod.author}
-      </Typography>
-      {componentQuoteReference()}
-      <div className={classes.svgQuoteDown}>
-        <FormatQuoteOutlinedIcon fontSize='large' color='secondary' />
-      </div>
-    </Paper>
+    <section className={classes.root} id='newsSection'>
+      <Grid container spacing={5} className={classes.container}>
+        <BuildNewsCards />
+      </Grid>
+      <Button
+        variant='contained'
+        color='primary'
+        className={classes.loadMoreButton}
+        onClick={() => setPage(page + 1)}
+      >
+        Load more
+      </Button>
+    </section>
   );
 }

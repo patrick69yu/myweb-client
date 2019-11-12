@@ -7,6 +7,10 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import FormatQuoteOutlinedIcon from "@material-ui/icons/FormatQuoteOutlined";
 
+// Import components
+import HeadingH2 from "../HeadingH2";
+import AttributionToQuotesAPI from "../AttributionToQuotesAPI";
+
 const useStyles = makeStyles(theme => ({
   root: {
     textAlign: "center",
@@ -19,12 +23,6 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.only("xs")]: {
       margin: "0 5%",
       padding: theme.spacing(2, 4)
-    }
-  },
-  title: {
-    fontSize: "3.5rem",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "3rem"
     }
   },
   date: {
@@ -80,23 +78,8 @@ const getTodaysDate = () => {
 export default function QuoteOfTheDay() {
   const classes = useStyles();
 
-  function addReferenceToQuote() {
-    return {
-      __html:
-        '<span style="z-index:50;font-size:0.9em;"><img src="https://theysaidso.com/branding/theysaidso.png" height="20" width="20" alt="theysaidso.com"/><a href="https://theysaidso.com" title="Powered by quotes from theysaidso.com" style="color: #9fcc25; margin-left: 4px; vertical-align: middle;">theysaidso.com</a></span>'
-    };
-  }
-
-  function componentQuoteReference() {
-    return <div dangerouslySetInnerHTML={addReferenceToQuote()} />;
-  }
-
   // Declare state variable qod, quote of the day, initialize as an object
-  const [qod, setQod] = useState({
-    quote: "",
-    author: "",
-    date: ""
-  });
+  const [qod, setQod] = useState({});
 
   useEffect(() => {
     const localStorageKeys = {
@@ -107,7 +90,9 @@ export default function QuoteOfTheDay() {
     let lastQuoteDate = window.localStorage.getItem(localStorageKeys.date);
 
     const fetchData = async () => {
-      const result = await axios.get("http://quotes.rest/qod.json");
+      const result = await axios.get("http://quotes.rest/qod.json", {
+        mode: "cors"
+      });
       const quote = result.data.contents.quotes[0].quote;
       const author = result.data.contents.quotes[0].author;
       const date = result.data.contents.quotes[0].date;
@@ -159,13 +144,11 @@ export default function QuoteOfTheDay() {
   }, []);
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} id='quoteSection'>
       <div className={classes.svgQuoteUp}>
         <FormatQuoteOutlinedIcon fontSize='large' color='secondary' />
       </div>
-      <Typography component='h2' className={classes.title}>
-        Quote of the day
-      </Typography>
+      <HeadingH2 title='Quote of the day' />
       <Typography component='p' className={classes.date}>
         {qod.date}
       </Typography>
@@ -175,7 +158,7 @@ export default function QuoteOfTheDay() {
       <Typography component='p' className={classes.author}>
         {qod.author}
       </Typography>
-      {componentQuoteReference()}
+      <AttributionToQuotesAPI />
       <div className={classes.svgQuoteDown}>
         <FormatQuoteOutlinedIcon fontSize='large' color='secondary' />
       </div>

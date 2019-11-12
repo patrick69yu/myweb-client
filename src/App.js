@@ -27,7 +27,7 @@ const customTheme = createMuiTheme({
     primary: { main: blue[700] }
   },
   typography: {
-    fontFamily: "Caveat, Roboto, Helvetica, Arial, sans-serif"
+    fontFamily: "Caveat, Helvetica, Arial, sans-serif"
   }
 });
 

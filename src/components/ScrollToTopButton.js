@@ -10,7 +10,19 @@ const useStyles = makeStyles(theme => ({
   root: {
     position: "fixed",
     bottom: theme.spacing(8),
-    right: theme.spacing(8)
+    right: theme.spacing(8),
+    [theme.breakpoints.down("md")]: {
+      bottom: theme.spacing(6),
+      right: theme.spacing(6)
+    },
+    [theme.breakpoints.down("sm")]: {
+      bottom: theme.spacing(4),
+      right: theme.spacing(4)
+    },
+    [theme.breakpoints.down("xs")]: {
+      bottom: theme.spacing(2),
+      right: theme.spacing(2)
+    }
   }
 }));
 
@@ -25,7 +37,6 @@ function ScrollToTop(props) {
   });
 
   const handleClick = event => {
-    console.log("clicked => ", event);
     const anchor = (event.target.ownerDocument || document).querySelector("h1");
 
     if (anchor) {

@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
     fontSize: "2rem",
-    fontFamily: "Monoton, Roboto, Helvetica, Arial, sans-serif",
+    fontFamily: "Monoton, Helvetica, Arial, sans-serif",
     color: theme.palette.primary.main,
     fontWeight: "bold"
   },
