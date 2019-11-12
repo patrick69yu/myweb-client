@@ -11,12 +11,12 @@ import NewsFeed from "../Utils/NewsFeed";
 import AttributionToNewsAPI from "../AttributionToNewsAPI";
 import HeadingH2 from "../HeadingH2";
 
-// const bgImgUrl = "https://source.unsplash.com/collection/2208580";
+const bgImgUrl = "https://source.unsplash.com/collection/2208580";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    // background: "url(" + bgImgUrl + ") #FFF border-box center no-repeat fixed",
-    background: "#000",
+    background: "url(" + bgImgUrl + ") #FFF border-box center no-repeat fixed",
+    // background: "#000",
     backgroundSize: "cover",
     width: "100%",
     height: "100%"

@@ -118,8 +118,7 @@ export default function NewsFeed() {
         .get(apiUrl, {
           headers: {
             Authorization: "Bearer " + process.env.REACT_APP_NEWSAPI_API_KEY
-          },
-          mode: "cors"
+          }
         })
         .then(response => {
           // Handle success response

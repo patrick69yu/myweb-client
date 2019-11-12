@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 // Material-ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -52,6 +53,28 @@ const useStyles = makeStyles(theme => ({
 export default function NewsCard(props) {
   const classes = useStyles();
   const { number, title, author, date, imgUrl, description, newsUrl } = props;
+
+  // const [isImgValid, setIsImgValid] = useState(false);
+
+  // useEffect(() => {
+  //   if (imgUrl) {
+  //     axios
+  //       .get(imgUrl, {
+  //         headers: {
+  //           "Access-Control-Allow-Origin": "*"
+  //         }
+  //       })
+  //       .then(response => {
+  //         // Handle success response
+  //         setIsImgValid(true);
+  //       })
+  //       .catch(error => {
+  //         // Handle error message
+  //         console.log("X => ", error);
+  //         setIsImgValid(false);
+  //       });
+  //   }
+  // }, [imgUrl]);
 
   return (
     <Card className={classes.card}>
