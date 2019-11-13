@@ -11,25 +11,35 @@ import NewsFeed from "../Utils/NewsFeed";
 import AttributionToNewsAPI from "../AttributionToNewsAPI";
 import HeadingH2 from "../HeadingH2";
 
-const bgImgUrl = "https://source.unsplash.com/collection/2208580";
+// const bgImgUrl = "https://source.unsplash.com/collection/2208580";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    background: "url(" + bgImgUrl + ") #FFF border-box center no-repeat fixed",
-    // background: "#000",
-    backgroundSize: "cover",
     width: "100%",
     height: "100%"
   },
   page1: {
     width: "inherit",
-    height: "inherit",
-    textAlign: "center"
+    height: "auto",
+    minHeight: "100%",
+    textAlign: "center",
+    // background: "url(" + bgImgUrl + ") #FFF border-box center no-repeat fixed",
+    background: "#000",
+    backgroundSize: "cover",
+    padding: theme.spacing(2, 0, 6)
   },
   page2: {
     width: "inherit",
+    textAlign: "center",
     paddingTop: theme.spacing(4),
-    textAlign: "center"
+    paddingBottom: theme.spacing(4),
+
+    [theme.breakpoints.up("sm")]: {
+      paddingBottom: theme.spacing(6)
+    },
+    [theme.breakpoints.up("md")]: {
+      paddingBottom: theme.spacing(8)
+    }
   }
 }));
 
@@ -44,7 +54,7 @@ export default function Home() {
         <QuoteOfTheDay />
       </section>
       <section className={classes.page2}>
-        <HeadingH2 title='News' />
+        <HeadingH2 title="News" />
         <AttributionToNewsAPI />
         <NewsFeed />
       </section>

@@ -9,19 +9,19 @@ import NavigationOutlinedIcon from "@material-ui/icons/NavigationOutlined";
 const useStyles = makeStyles(theme => ({
   root: {
     position: "fixed",
-    bottom: theme.spacing(8),
-    right: theme.spacing(8),
-    [theme.breakpoints.down("md")]: {
-      bottom: theme.spacing(6),
-      right: theme.spacing(6)
-    },
-    [theme.breakpoints.down("sm")]: {
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+    [theme.breakpoints.up("sm")]: {
       bottom: theme.spacing(4),
       right: theme.spacing(4)
     },
-    [theme.breakpoints.down("xs")]: {
-      bottom: theme.spacing(2),
-      right: theme.spacing(2)
+    [theme.breakpoints.up("md")]: {
+      bottom: theme.spacing(6),
+      right: theme.spacing(6)
+    },
+    [theme.breakpoints.up("lg")]: {
+      bottom: theme.spacing(8),
+      right: theme.spacing(8)
     }
   }
 }));
@@ -46,7 +46,7 @@ function ScrollToTop(props) {
 
   return (
     <Zoom in={trigger}>
-      <div onClick={handleClick} role='presentation' className={classes.root}>
+      <div onClick={handleClick} role="presentation" className={classes.root}>
         {children}
       </div>
     </Zoom>
@@ -62,9 +62,9 @@ export default function ScrollToTopButton(props) {
   return (
     <ScrollToTop {...props}>
       <Fab
-        color='primary'
-        size='large'
-        aria-label='click the button to scroll back to the top of the page'
+        color="primary"
+        size="large"
+        aria-label="click the button to scroll back to the top of the page"
       >
         <NavigationOutlinedIcon />
       </Fab>

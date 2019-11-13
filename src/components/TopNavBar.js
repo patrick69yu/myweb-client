@@ -28,27 +28,30 @@ const useStyles = makeStyles(theme => ({
     minHeight: "4rem"
   },
   menuButton: {
-    display: "none",
+    display: "block",
     border: 0,
     borderRadius: theme.spacing(3),
     backgroundColor: theme.palette.primary.main,
     color: "#FFF",
     padding: theme.spacing(1),
-    [theme.breakpoints.down("sm")]: {
-      display: "block"
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
     }
   },
   title: {
     flexGrow: 1,
-    fontSize: "2rem",
+    fontSize: "1.8rem",
     fontFamily: "Monoton, Helvetica, Arial, sans-serif",
     color: theme.palette.primary.main,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "2rem"
+    }
   },
   navList: {
-    display: "flex",
-    [theme.breakpoints.down("sm")]: {
-      display: "none"
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "flex"
     }
   }
 }));
@@ -81,7 +84,7 @@ export default function TopNavBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position='fixed' className={classes.appBar}>
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolBar}>
           <Typography className={classes.title}>After Coffee</Typography>
           <List className={classes.navList}>
@@ -90,17 +93,17 @@ export default function TopNavBar() {
             ))}
           </List>
           <IconButton
-            aria-controls='navMenuMobile'
-            aria-haspopup='true'
+            aria-controls="navMenuMobile"
+            aria-haspopup="true"
             onClick={handleClick}
-            edge='start'
+            edge="start"
             className={classes.menuButton}
-            aria-label='Click the button to open menu'
+            aria-label="Click the button to open menu"
           >
             <MenuIcon />
           </IconButton>
           <Menu
-            id='navMenuMobile'
+            id="navMenuMobile"
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}

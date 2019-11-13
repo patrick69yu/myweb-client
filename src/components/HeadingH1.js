@@ -7,21 +7,22 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(theme => ({
   h1: {
-    fontSize: "5rem",
+    fontSize: "3rem",
+    padding: "1.5rem 1rem",
     textAlign: "center",
-    padding: "3rem 1.5rem",
     textShadow: "1px 1px",
-    [theme.breakpoints.down("md")]: {
-      fontSize: "4rem",
-      padding: "2.5rem 2rem"
-    },
-    [theme.breakpoints.down("sm")]: {
+    lineHeight: "1.2",
+    [theme.breakpoints.up("sm")]: {
       fontSize: "3.5rem",
       padding: "2rem 1rem"
     },
-    [theme.breakpoints.down("xs")]: {
-      fontSize: "3rem",
-      padding: "1.5rem 1rem"
+    [theme.breakpoints.up("md")]: {
+      fontSize: "4rem",
+      padding: "2.5rem 2rem"
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "5rem",
+      padding: "3rem 1.5rem"
     }
   }
 }));
@@ -33,9 +34,9 @@ export default function HeadingH1(props) {
   return (
     <Typography
       className={classes.h1}
-      color='secondary'
-      component='h1'
-      id='backToTopAnchor'
+      color="secondary"
+      component="h1"
+      id="backToTopAnchor"
     >
       {title}
     </Typography>

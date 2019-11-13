@@ -26,9 +26,9 @@ const useStyles = makeStyles(theme => ({
     }
   },
   date: {
-    fontSize: "1.5rem",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.3rem"
+    fontSize: "1.3rem",
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem"
     }
   },
   quote: {
@@ -46,11 +46,11 @@ const useStyles = makeStyles(theme => ({
     }
   },
   author: {
-    fontSize: "1.3rem",
+    fontSize: "1.18rem",
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.18rem"
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.3rem"
     }
   },
   svgQuoteUp: {
@@ -144,23 +144,23 @@ export default function QuoteOfTheDay() {
   }, []);
 
   return (
-    <Paper className={classes.root} id='quoteSection'>
+    <Paper className={classes.root} id="quoteSection">
       <div className={classes.svgQuoteUp}>
-        <FormatQuoteOutlinedIcon fontSize='large' color='secondary' />
+        <FormatQuoteOutlinedIcon fontSize="large" color="secondary" />
       </div>
-      <HeadingH2 title='Quote of the day' />
-      <Typography component='p' className={classes.date}>
+      <HeadingH2 title="Quote of the day" />
+      <Typography component="p" className={classes.date}>
         {qod.date}
       </Typography>
-      <Typography component='p' className={classes.quote}>
+      <Typography component="p" className={classes.quote}>
         {qod.quote}
       </Typography>
-      <Typography component='p' className={classes.author}>
+      <Typography component="p" className={classes.author}>
         {qod.author}
       </Typography>
       <AttributionToQuotesAPI />
       <div className={classes.svgQuoteDown}>
-        <FormatQuoteOutlinedIcon fontSize='large' color='secondary' />
+        <FormatQuoteOutlinedIcon fontSize="large" color="secondary" />
       </div>
     </Paper>
   );

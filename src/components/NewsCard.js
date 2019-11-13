@@ -10,7 +10,6 @@ import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles(theme => ({
   card: {
-    maxWidth: "25rem",
     margin: "0 auto"
   },
   flex: {
@@ -40,7 +39,9 @@ const useStyles = makeStyles(theme => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%" // 16:9
+    paddingTop: "56.25%", // 16:9
+    width: "100%",
+    maxWidth: "100%"
   },
   content: {
     padding: theme.spacing(2),
@@ -85,7 +86,7 @@ export default function NewsCard(props) {
 
         <div className={classes.rightCol}>
           {title ? (
-            <Typography component='h3' className={classes.title}>
+            <Typography component="h3" className={classes.title}>
               {title}
             </Typography>
           ) : null}
@@ -110,7 +111,7 @@ export default function NewsCard(props) {
               ? imgUrl
               : "https://icon-library.net/images/no-image-available-icon/no-image-available-icon-6.jpg"
           }
-          title='news article image'
+          title="news article image"
         />
       }
 
@@ -122,8 +123,8 @@ export default function NewsCard(props) {
         <Typography className={classes.content}>
           <Link
             href={newsUrl}
-            aria-label='click to read the news article in a new window'
-            target='_blank'
+            aria-label="click to read the news article in a new window"
+            target="_blank"
           >
             Read more
           </Link>

@@ -8,30 +8,26 @@ import Button from "@material-ui/core/Button";
 
 // Import components
 import NewsCard from "../NewsCard";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
     textAlign: "center",
-    padding: theme.spacing(4, 0, 8),
-    marginBottom: theme.spacing(8),
-    [theme.breakpoints.only("sm")]: {
-      padding: theme.spacing(4, 6),
-      marginBottom: theme.spacing(6)
+    padding: theme.spacing(2, 0),
+    [theme.breakpoints.up("sm")]: {
+      padding: theme.spacing(4, 6)
     },
-    [theme.breakpoints.only("xs")]: {
-      padding: theme.spacing(2, 4),
-      marginBottom: theme.spacing(4)
+    [theme.breakpoints.up("md")]: {
+      padding: theme.spacing(4, 0, 8)
     }
   },
-  title: {
-    fontSize: "3.5rem",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "3rem"
-    }
+  item: {
+    width: "100%",
+    maxWidth: "100%"
   },
   container: {
     maxWidth: "100%",
-    margin: theme.spacing(0, 0, 4)
+    margin: theme.spacing(0, 0, 3)
   },
   loadMoreButton: {
     padding: theme.spacing(1, 2),
@@ -141,7 +137,15 @@ export default function NewsFeed() {
       return articles.map(article => {
         count += 1;
         return (
-          <Grid item sm={12} md={6} lg={4} xl={3} key={count}>
+          <Grid
+            item
+            sm={12}
+            md={6}
+            lg={4}
+            xl={3}
+            className={classes.item}
+            key={count}
+          >
             <NewsCard
               number={count}
               title={article.title}
@@ -159,19 +163,76 @@ export default function NewsFeed() {
     return null;
   };
 
-  return (
-    <section className={classes.root} id='newsSection'>
-      <Grid container spacing={5} className={classes.container}>
-        <BuildNewsCards />
-      </Grid>
+  const [isPageReachLimit, setIsPageReachLimit] = useState(false);
+  const updatePageNum = event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const maxPageNum = 5;
+    if (page < maxPageNum) {
+      setPage(page + 1);
+    } else {
+      setIsPageReachLimit(true);
+    }
+  };
+
+  const LoadMoreButton = () => {
+    if (isPageReachLimit) {
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.loadMoreButton}
+          disabled
+        >
+          Load more
+        </Button>
+      );
+    }
+    return (
       <Button
-        variant='contained'
-        color='primary'
+        variant="contained"
+        color="primary"
         className={classes.loadMoreButton}
-        onClick={() => setPage(page + 1)}
+        onClick={updatePageNum}
       >
         Load more
       </Button>
+    );
+  };
+
+  const ReachLoadLimitErrMsg = () => {
+    if (isPageReachLimit) {
+      return (
+        <ErrorMessage
+          msg={
+            "Each topic can only retrieve 100 results. Try search some other topics."
+          }
+        />
+      );
+    }
+    return null;
+  };
+
+  return (
+    <section className={classes.root} id="newsSection">
+      <Grid container spacing={5} className={classes.container}>
+        <BuildNewsCards />
+      </Grid>
+      <LoadMoreButton />
+      <ReachLoadLimitErrMsg />
     </section>
   );
 }
+
+const useStylesErrMsg = makeStyles(theme => ({
+  errorMessage: {
+    color: theme.palette.error.main,
+    padding: theme.spacing(1, 2)
+  }
+}));
+
+const ErrorMessage = props => {
+  const classes = useStylesErrMsg();
+  return <Typography className={classes.errorMessage}>{props.msg}</Typography>;
+};
