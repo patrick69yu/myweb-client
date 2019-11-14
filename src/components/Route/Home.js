@@ -11,7 +11,7 @@ import NewsFeed from "../Utils/NewsFeed";
 import AttributionToNewsAPI from "../AttributionToNewsAPI";
 import HeadingH2 from "../HeadingH2";
 
-// const bgImgUrl = "https://source.unsplash.com/collection/2208580";
+const bgImgUrl = "https://source.unsplash.com/collection/2208580";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,8 +23,7 @@ const useStyles = makeStyles(theme => ({
     height: "auto",
     minHeight: "100%",
     textAlign: "center",
-    // background: "url(" + bgImgUrl + ") #FFF border-box center no-repeat fixed",
-    background: "#000",
+    background: "url(" + bgImgUrl + ") #FFF border-box center no-repeat fixed",
     backgroundSize: "cover",
     padding: theme.spacing(2, 0, 6)
   },
