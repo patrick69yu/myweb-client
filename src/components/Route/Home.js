@@ -23,8 +23,7 @@ const useStyles = makeStyles(theme => ({
     height: "auto",
     minHeight: "100%",
     textAlign: "center",
-    background: "url(" + bgImgUrl + ") #FFF border-box center no-repeat fixed",
-    backgroundSize: "cover",
+    background: "#000",
     padding: theme.spacing(2, 0, 6)
   },
   page2: {
