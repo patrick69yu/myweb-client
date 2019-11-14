@@ -26,7 +26,7 @@ export default function Whoisthis() {
     <section className={classes.root}>
       <HeadingH1 title={h1Title} />
       <Typography className={classes.msg}>
-        More great things are coming...
+        Developement in progress... More great things are coming...
       </Typography>
     </section>
   );

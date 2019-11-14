@@ -3,6 +3,7 @@ import React from "react";
 // Material-ui
 import { makeStyles } from "@material-ui/styles";
 import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
 
 // Import components
 import HeadingH1 from "../HeadingH1";
@@ -25,8 +26,18 @@ export default function Aboutme() {
   return (
     <section className={classes.root}>
       <HeadingH1 title={h1Title} />
+      <Typography className={classes.msg}>Hey there,</Typography>
+      <Typography className={classes.msg}>I'm Patrick Yu</Typography>
+      <Typography className={classes.msg}>A web developer</Typography>
       <Typography className={classes.msg}>
-        More great things are coming...
+        You can see my resume&nbsp;
+        <Link
+          href="https://drive.google.com/open?id=1Iindq0R2HdMtkskIe_sdLAOVxsjgWDcW"
+          target="_blank"
+          underline="always"
+        >
+          here
+        </Link>
       </Typography>
     </section>
   );
