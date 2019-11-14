@@ -5,7 +5,7 @@ import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import { Typography } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 
 // Import components
 import NewsCard from "../NewsCard";
@@ -33,6 +33,11 @@ const useStyles = makeStyles(theme => ({
   loadMoreButton: {
     padding: theme.spacing(1, 2),
     fontSize: "1.1rem"
+  },
+  messageNoResults: {
+    padding: theme.spacing(1, 2),
+    fontSize: "1.5rem",
+    color: theme.palette.secondary.main
   }
 }));
 
@@ -156,27 +161,23 @@ export default function NewsFeed() {
   };
 
   const LoadMoreButton = () => {
-    if (isPageReachLimit) {
+    if (articles.length > 0) {
       return (
         <Button
           variant="contained"
           color="primary"
           className={classes.loadMoreButton}
-          disabled
+          disabled={isPageReachLimit}
+          onClick={updatePageNum}
         >
           Load more
         </Button>
       );
     }
     return (
-      <Button
-        variant="contained"
-        color="primary"
-        className={classes.loadMoreButton}
-        onClick={updatePageNum}
-      >
-        Load more
-      </Button>
+      <Typography className={classes.messageNoResults}>
+        No articles found. Please modify your serach.
+      </Typography>
     );
   };
 
