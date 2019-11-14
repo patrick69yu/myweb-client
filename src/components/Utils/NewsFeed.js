@@ -5,10 +5,11 @@ import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import { Typography } from "@material-ui/core";
 
 // Import components
 import NewsCard from "../NewsCard";
-import { Typography } from "@material-ui/core";
+import SearchForm from "../SearchForm";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,71 +39,49 @@ const useStyles = makeStyles(theme => ({
 export default function NewsFeed() {
   const classes = useStyles();
   const defaultSettings = {
-    q: ["nba"],
+    q: "Today's news",
     page: 1,
-    language: "en",
-    sortBy: "publishedAt",
-    qInTitle: false,
-    pageSize: 20,
-    from: "",
-    to: ""
+    sortBy: "relevancy",
+    domains: "",
+    qInTitle: false
   };
 
   const [q, setQ] = useState(defaultSettings.q);
   const [page, setPage] = useState(defaultSettings.page);
-  const [language, setLanguage] = useState(defaultSettings.language);
   const [sortBy, setSortBy] = useState(defaultSettings.sortBy);
+  const [domains, setDomains] = useState(defaultSettings.domains);
   const [qInTitle, setQInTitle] = useState(defaultSettings.qInTitle);
-  const [pageSize, setPageSize] = useState(defaultSettings.pageSize);
-  const [fromDate, setFromDate] = useState(defaultSettings.from);
-  const [toDate, setToDate] = useState(defaultSettings.to);
 
   const [apiUrl, setApiUrl] = useState("");
+
   // Build API url based on the query parameters
   useEffect(() => {
     const baseUrl = "https://newsapi.org/v2/everything?";
     const defaultPage = 1;
-    const defaultPageSize = 20;
+    const defaultLanguage = "en";
 
     if (q) {
-      const queryQ = (qInTitle ? "qInTitle=" : "q=") + q.join(" AND ");
-
+      const queryQ = qInTitle ? "qInTitle=" : "q=" + q;
       const queryPage = page > defaultPage ? "page=" + page : null;
-
-      const queryLanguage = "language=" + language;
-
-      const querySortBy = "sortBy=" + sortBy;
-
-      const queryPageSize =
-        pageSize > defaultPageSize ? "pageSize=" + pageSize : null;
-
-      const queryFromDate = fromDate ? "from=" + fromDate : null;
-
-      const queryToDate = toDate ? "to=" + toDate : null;
+      const queryLanguage = `language=${defaultLanguage}`;
+      const querySortBy = `sortBy=${sortBy}`;
+      const queryDomains = domains ? `domains=${domains}` : null;
 
       setApiUrl(
         baseUrl +
-          [
-            queryQ,
-            queryPage,
-            queryLanguage,
-            querySortBy,
-            queryPageSize,
-            queryFromDate,
-            queryToDate
-          ]
+          [queryQ, queryPage, queryLanguage, querySortBy, queryDomains]
             .filter(item => item !== null)
             .join("&")
       );
     }
-  }, [q, page, language, sortBy, qInTitle, pageSize, fromDate, toDate]);
+  }, [q, qInTitle, page, sortBy, domains]);
 
   const initialArticles = [];
   function reducerForArticles(articles, action) {
-    if (action.newArticles) {
+    if (action.newArticles && action.newArticles.length > 0) {
       return articles.concat(action.newArticles);
     }
-    throw new Error();
+    return action.newArticles;
   }
   const [articles, dispatch] = useReducer(reducerForArticles, initialArticles);
 
@@ -160,7 +139,7 @@ export default function NewsFeed() {
       });
     }
 
-    return null;
+    return <div>Nothing</div>;
   };
 
   const [isPageReachLimit, setIsPageReachLimit] = useState(false);
@@ -216,6 +195,19 @@ export default function NewsFeed() {
 
   return (
     <section className={classes.root} id="newsSection">
+      <SearchForm
+        defaultKeyword={defaultSettings.q}
+        setSearchWord={setQ}
+        defaultDomains={defaultSettings.domains}
+        setSearchDomains={setDomains}
+        defaultIfSearchInTitle={defaultSettings.qInTitle}
+        setIfSearchInTitle={setQInTitle}
+        defaultSortBy={defaultSettings.sortBy}
+        setSortBy={setSortBy}
+        resetPageNumber={setPage}
+        resetArticles={dispatch}
+        resetPageLimit={setIsPageReachLimit}
+      />
       <Grid container spacing={5} className={classes.container}>
         <BuildNewsCards />
       </Grid>
