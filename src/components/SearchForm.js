@@ -13,6 +13,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Switch from "@material-ui/core/Switch";
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -48,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   },
   searchButton: {
     padding: theme.spacing(1),
-    fontSize: "1.1rem"
+    fontSize: "1.2rem"
   },
   switchBox: {
     margin: theme.spacing(1)
@@ -66,9 +67,7 @@ export default function SearchForm(props) {
     setIfSearchInTitle,
     defaultSortBy,
     setSortBy,
-    resetPageNumber,
-    resetArticles,
-    resetPageLimit
+    resetArticles
   } = props;
 
   const [keyword, setKeyword] = useState(defaultKeyword);
@@ -108,8 +107,6 @@ export default function SearchForm(props) {
     event.stopPropagation();
 
     if (isKeywordSet) {
-      resetPageNumber(1);
-      resetPageLimit(false);
       resetArticles({ newArticles: [] });
       setSearchWord(keyword);
       setIfSearchInTitle(searchInTitle);
@@ -219,8 +216,9 @@ export default function SearchForm(props) {
             color="secondary"
             className={classes.SearchButton}
             onClick={handleSearch}
+            type="submit"
           >
-            Load more
+            <Typography>Search</Typography>
           </Button>
         </Grid>
       </Grid>
