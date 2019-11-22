@@ -66,8 +66,7 @@ export default function SearchForm(props) {
     defaultIfSearchInTitle,
     setIfSearchInTitle,
     defaultSortBy,
-    setSortBy,
-    resetArticles
+    setSortBy
   } = props;
 
   const [keyword, setKeyword] = useState(defaultKeyword);
@@ -76,7 +75,6 @@ export default function SearchForm(props) {
 
   const updateKeyword = event => {
     event.preventDefault();
-    event.stopPropagation();
 
     setKeyword(event.target.value);
     event.target.value ? setIsKeywordSet(true) : setIsKeywordSet(false);
@@ -85,30 +83,30 @@ export default function SearchForm(props) {
   const [searchInTitle, setSearchInTitle] = useState(defaultIfSearchInTitle);
 
   const updateSearchInTitle = event => {
-    setSearchInTitle(event.target.checked.toString());
+    const isSearchInTitleEnabled = event.target.checked.toString();
+    setSearchInTitle(isSearchInTitleEnabled);
+    window.localStorage.setItem("qInTitle", isSearchInTitleEnabled);
   };
 
   const [domains, setDomains] = useState(defaultDomains);
 
   const updateDomains = event => {
     event.preventDefault();
-    event.stopPropagation();
     setDomains(event.target.value);
   };
 
   const [sortByOption, setSortByOption] = useState(defaultSortBy);
 
   const changeSortByOption = event => {
-    setSortByOption(event.target.value);
+    const inputSortBy = event.target.value;
+    setSortByOption(inputSortBy);
+    window.localStorage.setItem("sortBy", inputSortBy);
   };
 
   const handleSearch = event => {
     event.preventDefault();
-    event.stopPropagation();
 
     if (isKeywordSet) {
-      resetArticles({ newArticles: [] });
-
       setSearchWord(keyword);
       window.localStorage.setItem("q", keyword);
 
@@ -124,18 +122,29 @@ export default function SearchForm(props) {
   };
 
   useEffect(() => {
-    if (isKeywordSet) {
-      resetArticles({ newArticles: [] });
+    const inputQ = document.querySelector("#inputSearchKeyword").value.trim();
+    const inputDomains = document
+      .querySelector("#inputSourceDomains")
+      .value.trim();
+
+    if (inputQ) {
+      setSearchWord(inputQ);
+      window.localStorage.setItem("q", inputQ);
+
       setIfSearchInTitle(searchInTitle);
       window.localStorage.setItem("qInTitle", searchInTitle);
+
+      setSearchDomains(inputDomains);
+      window.localStorage.setItem("domains", inputDomains);
+
       setSortBy(sortByOption);
       window.localStorage.setItem("sortBy", sortByOption);
     }
   }, [
-    isKeywordSet,
-    resetArticles,
+    setSearchWord,
     setIfSearchInTitle,
     searchInTitle,
+    setSearchDomains,
     setSortBy,
     sortByOption
   ]);

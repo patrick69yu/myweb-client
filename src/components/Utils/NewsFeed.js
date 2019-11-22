@@ -48,6 +48,7 @@ export default function NewsFeed() {
     qInTitle: window.localStorage.getItem("qInTitle") || "false"
   };
 
+  // Store user's preferences into localStorage
   window.localStorage.setItem("q", defaultSettings.q);
   window.localStorage.setItem("qInTitle", defaultSettings.qInTitle);
   window.localStorage.setItem("domains", defaultSettings.domains);
@@ -94,6 +95,7 @@ export default function NewsFeed() {
   // The Effect of fetching news from API
   useEffect(() => {
     setIsSearching(true);
+    dispatch({ newArticles: [] });
     if (apiUrl) {
       // If API URL at least has q parameter, fetch data from API
       axios
@@ -171,7 +173,6 @@ export default function NewsFeed() {
         setIfSearchInTitle={setQInTitle}
         defaultSortBy={defaultSettings.sortBy}
         setSortBy={setSortBy}
-        resetArticles={dispatch}
       />
       {isSearching ? (
         <CircularProgress />
