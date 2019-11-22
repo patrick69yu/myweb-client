@@ -42,11 +42,16 @@ const useStyles = makeStyles(theme => ({
 export default function NewsFeed() {
   const classes = useStyles();
   const defaultSettings = {
-    q: "Today",
-    sortBy: "publishedAt",
-    domains: "",
-    qInTitle: false
+    q: window.localStorage.getItem("q") || "News",
+    sortBy: window.localStorage.getItem("sortBy") || "publishedAt",
+    domains: window.localStorage.getItem("domains") || "",
+    qInTitle: window.localStorage.getItem("qInTitle") || "false"
   };
+
+  window.localStorage.setItem("q", defaultSettings.q);
+  window.localStorage.setItem("qInTitle", defaultSettings.qInTitle);
+  window.localStorage.setItem("domains", defaultSettings.domains);
+  window.localStorage.setItem("sortBy", defaultSettings.sortBy);
 
   const [q, setQ] = useState(defaultSettings.q);
   const [sortBy, setSortBy] = useState(defaultSettings.sortBy);
@@ -62,7 +67,7 @@ export default function NewsFeed() {
     const defaultLanguage = "en";
 
     if (q) {
-      const queryQ = qInTitle ? "qInTitle=" + q : "q=" + q;
+      const queryQ = qInTitle === "true" ? "qInTitle=" + q : "q=" + q;
       const queryPageSize = "pageSize=" + pageSize;
       const queryLanguage = `language=${defaultLanguage}`;
       const querySortBy = `sortBy=${sortBy}`;

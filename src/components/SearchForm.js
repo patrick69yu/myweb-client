@@ -85,7 +85,7 @@ export default function SearchForm(props) {
   const [searchInTitle, setSearchInTitle] = useState(defaultIfSearchInTitle);
 
   const updateSearchInTitle = event => {
-    setSearchInTitle(event.target.checked);
+    setSearchInTitle(event.target.checked.toString());
   };
 
   const [domains, setDomains] = useState(defaultDomains);
@@ -108,10 +108,18 @@ export default function SearchForm(props) {
 
     if (isKeywordSet) {
       resetArticles({ newArticles: [] });
+
       setSearchWord(keyword);
+      window.localStorage.setItem("q", keyword);
+
       setIfSearchInTitle(searchInTitle);
+      window.localStorage.setItem("qInTitle", searchInTitle);
+
       setSearchDomains(domains);
+      window.localStorage.setItem("domains", domains);
+
       setSortBy(sortByOption);
+      window.localStorage.setItem("sortBy", sortByOption);
     }
   };
 
@@ -119,7 +127,9 @@ export default function SearchForm(props) {
     if (isKeywordSet) {
       resetArticles({ newArticles: [] });
       setIfSearchInTitle(searchInTitle);
+      window.localStorage.setItem("qInTitle", searchInTitle);
       setSortBy(sortByOption);
+      window.localStorage.setItem("sortBy", sortByOption);
     }
   }, [
     isKeywordSet,
@@ -181,7 +191,7 @@ export default function SearchForm(props) {
           <FormControlLabel
             control={
               <Switch
-                checked={searchInTitle}
+                checked={searchInTitle === "true"}
                 onChange={updateSearchInTitle}
                 value="searchInTitle"
               />
