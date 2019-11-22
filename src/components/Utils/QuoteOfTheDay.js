@@ -96,7 +96,7 @@ export default function QuoteOfTheDay() {
       const quote = result.data.contents.quotes[0].quote;
       const author = result.data.contents.quotes[0].author;
       const date = result.data.contents.quotes[0].date;
-      console.log("Newest date is => " + quote + author + date);
+
       // Update the state object with fetched data
       setQod({
         quote: quote,
@@ -125,19 +125,14 @@ export default function QuoteOfTheDay() {
 
     if (lastQuoteDate === null) {
       // Need to retrieve new quote
-      console.log("no local data, fetching new data => ");
       fetchData();
     } else {
-      console.log("Found local data");
       // Check the last quote date againt today's date
-      console.log("Today => " + getTodaysDate());
       if (lastQuoteDate === getTodaysDate()) {
-        console.log("Already got today's data, reading from local");
         // No need to retrieve today's quote again. Read quote from localStorage
         readDataFromLocal();
       } else {
         // Need to update a new quote
-        console.log("Data is not newest, fetching new data");
         fetchData();
       }
     }
