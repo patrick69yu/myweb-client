@@ -118,12 +118,17 @@ export default function SearchForm(props) {
   useEffect(() => {
     if (isKeywordSet) {
       resetArticles({ newArticles: [] });
-      setSearchWord(keyword);
       setIfSearchInTitle(searchInTitle);
-      setSearchDomains(domains);
       setSortBy(sortByOption);
     }
-  }, [searchInTitle, sortByOption]);
+  }, [
+    isKeywordSet,
+    resetArticles,
+    setIfSearchInTitle,
+    searchInTitle,
+    setSortBy,
+    sortByOption
+  ]);
 
   return (
     <form noValidate autoComplete="off" onSubmit={handleSearch}>

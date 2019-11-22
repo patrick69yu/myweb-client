@@ -5,6 +5,7 @@ import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Import components
 import NewsCard from "../NewsCard";
@@ -83,9 +84,11 @@ export default function NewsFeed() {
     return action.newArticles;
   }
   const [articles, dispatch] = useReducer(reducerForArticles, []);
+  const [isSearching, setIsSearching] = useState(false);
 
   // The Effect of fetching news from API
   useEffect(() => {
+    setIsSearching(true);
     if (apiUrl) {
       // If API URL at least has q parameter, fetch data from API
       axios
@@ -101,13 +104,16 @@ export default function NewsFeed() {
           if (articlesCount) {
             dispatch({ newArticles: response.data.articles });
           }
+          setIsSearching(false);
         })
         .catch(error => {
           // Handle error message
           console.log("X => ", error);
+          setIsSearching(false);
         });
     } else {
       // API must have q parameter. Alert user to enter a keyword
+      setIsSearching(false);
     }
   }, [apiUrl]);
 
@@ -162,9 +168,13 @@ export default function NewsFeed() {
         setSortBy={setSortBy}
         resetArticles={dispatch}
       />
-      <Grid container spacing={5} className={classes.container}>
-        <BuildNewsCards />
-      </Grid>
+      {isSearching ? (
+        <CircularProgress />
+      ) : (
+        <Grid container spacing={5} className={classes.container}>
+          <BuildNewsCards />
+        </Grid>
+      )}
     </section>
   );
 }
