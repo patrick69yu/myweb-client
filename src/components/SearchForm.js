@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Material-ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -82,7 +82,7 @@ export default function SearchForm(props) {
     event.target.value ? setIsKeywordSet(true) : setIsKeywordSet(false);
   };
 
-  const [searchInTitle, setSearchInTitle] = useState(null);
+  const [searchInTitle, setSearchInTitle] = useState(defaultIfSearchInTitle);
 
   const updateSearchInTitle = event => {
     setSearchInTitle(event.target.checked);
@@ -96,7 +96,7 @@ export default function SearchForm(props) {
     setDomains(event.target.value);
   };
 
-  const [sortByOption, setSortByOption] = useState(null);
+  const [sortByOption, setSortByOption] = useState(defaultSortBy);
 
   const changeSortByOption = event => {
     setSortByOption(event.target.value);
@@ -112,9 +112,18 @@ export default function SearchForm(props) {
       setIfSearchInTitle(searchInTitle);
       setSearchDomains(domains);
       setSortBy(sortByOption);
-    } else {
     }
   };
+
+  useEffect(() => {
+    if (isKeywordSet) {
+      resetArticles({ newArticles: [] });
+      setSearchWord(keyword);
+      setIfSearchInTitle(searchInTitle);
+      setSearchDomains(domains);
+      setSortBy(sortByOption);
+    }
+  }, [searchInTitle, sortByOption]);
 
   return (
     <form noValidate autoComplete="off" onSubmit={handleSearch}>
@@ -167,11 +176,7 @@ export default function SearchForm(props) {
           <FormControlLabel
             control={
               <Switch
-                checked={
-                  searchInTitle === null
-                    ? defaultIfSearchInTitle
-                    : searchInTitle
-                }
+                checked={searchInTitle}
                 onChange={updateSearchInTitle}
                 value="searchInTitle"
               />

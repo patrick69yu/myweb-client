@@ -61,7 +61,7 @@ export default function NewsFeed() {
     const defaultLanguage = "en";
 
     if (q) {
-      const queryQ = qInTitle ? "qInTitle=" : "q=" + q;
+      const queryQ = qInTitle ? "qInTitle=" + q : "q=" + q;
       const queryPageSize = "pageSize=" + pageSize;
       const queryLanguage = `language=${defaultLanguage}`;
       const querySortBy = `sortBy=${sortBy}`;
