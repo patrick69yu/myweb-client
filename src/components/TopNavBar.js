@@ -62,15 +62,15 @@ export default function TopNavBar() {
     {
       title: "Home",
       to: "/"
-    },
-    {
-      title: "About me",
-      to: "/aboutme"
-    },
-    {
-      title: "Who is this",
-      to: "/whoisthis"
     }
+    // {
+    //   title: "About me",
+    //   to: "/aboutme"
+    // },
+    // {
+    //   title: "Who is this",
+    //   to: "/whoisthis"
+    // }
   ];
   const [anchorEl, setAnchorEl] = useState(null);
 
