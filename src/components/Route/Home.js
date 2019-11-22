@@ -11,8 +11,6 @@ import NewsFeed from "../Utils/NewsFeed";
 import AttributionToNewsAPI from "../AttributionToNewsAPI";
 import HeadingH2 from "../HeadingH2";
 
-const bgImgUrl = "https://source.unsplash.com/collection/2208580";
-
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
